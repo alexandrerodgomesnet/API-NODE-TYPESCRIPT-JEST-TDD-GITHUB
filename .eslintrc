@@ -8,5 +8,8 @@
       "eslint:recommended",
       "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended"
-    ]
+    ],
+    "eslint-disable no-undef": "off",
+    "eslint-disable @typescript-eslint/no-var-requires": "off",
+    "eslint-disable-next-line no-undef": "off"
   }
