@@ -1,4 +1,4 @@
-export interface ForecastPoint {
+export interface IForecastPoint {
     time: string;
     swellDirection: number;
     swellHeight: number;

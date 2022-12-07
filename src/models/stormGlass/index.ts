@@ -1,3 +1,3 @@
-export * from './StormGlassPoint';
-export * from './stormGlassPointSource';
-export * from './StormGlassForecastResponse';
+export * from './IStormGlassPoint';
+export * from './IStormGlassPointSource';
+export * from './IStormGlassForecastResponse';

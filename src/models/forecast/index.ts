@@ -1,1 +1,1 @@
-export * from './ForecastPoint';
+export * from './IForecastPoint';

@@ -1,36 +1,36 @@
-import { ForecastPoint, StormGlassForecastResponse, StormGlassPoint } from "@src/models";
+import { IForecastPoint, IStormGlassForecastResponse, IStormGlassPoint } from "@src/models";
 import { ClienteRequestError, StormGlassResponseError } from "@src/util/errors";
-import { AxiosStatic } from "axios";
 import config, { IConfig } from 'config';
+import { HttpClient } from '@src/util';
 
-const stormGlassResourceConfig: IConfig = config.get('App.resources.StormGlass');
+const resourceConfig: IConfig = config.get('App.resources.StormGlass');
 
 export class StormGlass {
     readonly stormGlassAPIParams = 'swellDirection,swellHeight,swellPeriod,waveDirection,waveHeight,windDirection,windSpeed';
     readonly stormGlassAPISource = 'noaa'
-    constructor(protected request: AxiosStatic) { }
+    constructor(protected request = new HttpClient()) { }
 
-    public async fetchPoints(lat: number, lng: number): Promise<ForecastPoint[]> {
+    public async fetchPoints(lat: number, lng: number): Promise<IForecastPoint[]> {
 
         try {
-            const response = await this.request.get<StormGlassForecastResponse>
-                (`${stormGlassResourceConfig.get('apiUrl')}/weather/point?lat=${lat}&lng=${lng}&params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}`,
+            const response = await this.request.get<IStormGlassForecastResponse>
+                (`${resourceConfig.get('apiUrl')}/weather/point?lat=${lat}&lng=${lng}&params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}`,
                     {
                         headers: {
-                            Authorization: stormGlassResourceConfig.get('apiToken')
+                            Authorization: resourceConfig.get('apiToken')
                         }
                     });
             return this.normalizeResponse(response.data);
         } catch (error: any) {
 
-            if (error.response && error.response.data)
+            if (HttpClient.isRequestError(error))
                 throw new StormGlassResponseError(`Error: ${JSON.stringify(error.response.data)} Code: ${error.response.status}`)
 
             throw new ClienteRequestError(error.message);
         }
     }
 
-    private normalizeResponse(points: StormGlassForecastResponse): ForecastPoint[] {
+    private normalizeResponse(points: IStormGlassForecastResponse): IForecastPoint[] {
         return points.hours.filter(this.isValidPoint.bind(this))
             .map((point) => ({
                 time: point.time,
@@ -44,7 +44,7 @@ export class StormGlass {
             }));
     }
 
-    private isValidPoint(point: Partial<StormGlassPoint>): boolean {
+    private isValidPoint(point: Partial<IStormGlassPoint>): boolean {
         return !!(
             point.time &&
             point.swellDirection?.[this.stormGlassAPISource] &&
