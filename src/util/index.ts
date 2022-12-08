@@ -1,3 +1,3 @@
 export * from './errors';
-export * from './module-alias';
-export * from './http-client';
+export * from './Module-alias';
+export * from './Http-client';
