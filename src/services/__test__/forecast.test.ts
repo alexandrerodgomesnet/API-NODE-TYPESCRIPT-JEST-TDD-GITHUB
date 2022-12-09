@@ -42,8 +42,7 @@ const mockedStormGlassService = new StormGlass() as jest.Mocked<StormGlass>;
             lat: -33.792726,
             lng: 151.289824,
             name: 'Manly',
-            position: EBeachPosition.E,
-            user: 'some-id',
+            position: EBeachPosition.E
         }
     ];
 

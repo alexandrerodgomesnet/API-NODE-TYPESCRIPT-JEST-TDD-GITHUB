@@ -1,4 +1,7 @@
+import { Beach } from "@src/models";
+
 describe('Beaches functional test', () => {
+
     describe('When creating a beach', () => {
         it('should create a beach with success', async() => { 
             const newBeach = {

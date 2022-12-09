@@ -1,3 +1,18 @@
 {
-    "teste": []
+  "beaches": [
+    {
+      "lat": -33.792726,
+      "lng": 151.289824,
+      "name": "Manly",
+      "position": "E",
+      "id": 1
+    },
+    {
+      "lat": -33.792726,
+      "lng": 151.289824,
+      "name": "Manly",
+      "position": "E",
+      "id": 2
+    }
+  ]
 }
